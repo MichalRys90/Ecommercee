@@ -57,6 +57,5 @@ public class UserController {
         user.setUserKey(generateUserKey);
         userRepository.save(user);
         return ResponseEntity.ok(generateUserKey);
-
     }
 }
