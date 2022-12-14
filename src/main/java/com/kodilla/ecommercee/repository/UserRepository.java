@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<User> findById(Long taskId);
+    Optional<User> findById(Long userId);
     User findByUsername(String username);
     User save(User user);
     List<User> findAll();

@@ -4,6 +4,7 @@ import com.kodilla.ecommercee.controller.CartController;
 import com.kodilla.ecommercee.domain.*;
 import com.kodilla.ecommercee.domain.dto.CartDto;
 import com.kodilla.ecommercee.domain.dto.ProductDto;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.repository.CartItemRepository;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
@@ -38,9 +39,8 @@ public class CartControllerTestSuit {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-
     @Test
-    void testCreateEmptyCart() {
+    void testCreateEmptyCart() throws UserNotFoundException {
         //Given
         User user = new User();
         userRepository.save(user);

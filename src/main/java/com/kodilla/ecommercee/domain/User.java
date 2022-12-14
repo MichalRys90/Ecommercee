@@ -50,6 +50,12 @@ public class User {
     @JsonIgnoreProperties("users")
     private List<Order> users = new ArrayList<>();
 
+    @OneToMany(targetEntity = Activity.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private List<Activity> activities = new ArrayList<>();
+
     public User(String username, String firstName, String lastName, Boolean isBlocked, String userKey, List<Order> users) {
         this.username = username;
         this.firstName = firstName;
@@ -60,6 +66,17 @@ public class User {
     }
 
     public User(String username, String firstName, String lastName, Boolean isBlocked, String userKey, List<Order> users, String password) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isBlocked = isBlocked;
+        this.userKey = userKey;
+        this.users = users;
+        this.password = password;
+    }
+
+    public User(Long userId, String username, String firstName, String lastName, Boolean isBlocked, String userKey, String password, List<Order> users) {
+        this.userId = userId;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;

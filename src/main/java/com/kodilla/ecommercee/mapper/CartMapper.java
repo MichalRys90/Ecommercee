@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.domain.CartStatus;
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.dto.CartDto;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ public class CartMapper {
 
     @Autowired
     private UserRepository userRepository;
-    public Order mapToCart(final CartDto cartDto) {
+    public Order mapToCart(final CartDto cartDto) throws UserNotFoundException {
         return new Order(cartDto.getId(),
-                userRepository.findById(cartDto.getUserId()).get(),
+                userRepository.findById(cartDto.getUserId()).orElseThrow(UserNotFoundException::new),
                 LocalDateTime.now(),
                 CartStatus.CART,
                 new HashSet<>());

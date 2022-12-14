@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -37,7 +36,7 @@ public class OrderController {
 
     @GetMapping(value = "{orderId}")
 
-    public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) throws Exception {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) throws OrderNotFoundException {
         return ResponseEntity.ok(orderMapper.mapToOrderDto(dbService.getOrder(orderId)));
     }
 

@@ -1,8 +1,9 @@
-package com.kodilla.ecommercee.repository;
+package com.kodilla.ecommercee.orderTests;
 
 import com.kodilla.ecommercee.domain.CartItem;
 import com.kodilla.ecommercee.domain.CartStatus;
 import com.kodilla.ecommercee.domain.Order;
+import com.kodilla.ecommercee.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

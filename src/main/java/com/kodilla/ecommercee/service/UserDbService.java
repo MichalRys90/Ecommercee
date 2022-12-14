@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.User;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.exception.UserWithGivenUserNameExist;
 import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class UserDbService {
 
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    public User getUser(long userId) throws UserNotFoundException {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
     public User saveUser(User user) throws UserWithGivenUserNameExist {
