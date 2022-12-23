@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.cartTests;
 import com.kodilla.ecommercee.controller.CartController;
 import com.kodilla.ecommercee.domain.*;
 import com.kodilla.ecommercee.domain.dto.CartDto;
+import com.kodilla.ecommercee.domain.dto.OrderDto;
 import com.kodilla.ecommercee.domain.dto.ProductDto;
 import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.repository.CartItemRepository;
@@ -163,7 +164,7 @@ public class CartControllerTestSuit {
 
         //When
 
-        ResponseEntity<Order> createOrder = cartController.createOrderFromCart(cart.getId());
+        ResponseEntity<OrderDto> createOrder = cartController.createOrderFromCart(cart.getId());
         Set<CartItem> set = new HashSet<>(cartItemRepository.findAllByOrder(cart));
 
         for (CartItem cartItem : set) {

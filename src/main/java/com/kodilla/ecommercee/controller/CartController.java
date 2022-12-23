@@ -2,9 +2,11 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.*;
 import com.kodilla.ecommercee.domain.dto.CartDto;
+import com.kodilla.ecommercee.domain.dto.OrderDto;
 import com.kodilla.ecommercee.domain.dto.ProductDto;
 import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class CartController {
     private CartMapper cartMapper;
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     @PostMapping(value = "/emptyCart", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CartDto> createEmptyCart(@RequestBody CartDto cartDto) throws UserNotFoundException {
@@ -67,9 +72,10 @@ public class CartController {
     }
 
     @PostMapping(value = "createOrder/{cardId}")
-    public ResponseEntity<Order> createOrderFromCart(@PathVariable Long cardId) throws Exception {
+    public ResponseEntity<OrderDto> createOrderFromCart(@PathVariable Long cardId) throws Exception {
         activityDbService.saveActivity(new Activity(orderDbService.getOrder(cardId).getUser(),
                 "Request create order from cart. Cart id: " + cardId));
-        return ResponseEntity.ok(cartDbService.createOrder(cardId));
+                Order order = cartDbService.createOrder(cardId);
+        return ResponseEntity.ok(orderMapper.mapToOrderDto(order));
     }
 }
