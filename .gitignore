@@ -1,9 +1,7 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
-
-*.jar
-!build/libs/**/*.jar
+!build/libs/ecommercee-0.0.1-SNAPSHOT-plain.jar
 
 ### STS ###
 .apt_generated
