@@ -3,7 +3,7 @@
 !gradle/wrapper/gradle-wrapper.jar
 
 *.jar
-!libs/**/*.jar
+!build/libs/**/*.jar
 
 ### STS ###
 .apt_generated
