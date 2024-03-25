@@ -48,7 +48,7 @@ public class CartControllerTestSuit {
         CartDto cartDto = new CartDto(1, user.getUserId());
 
         //When
-        ResponseEntity<CartDto> createCart = cartController.createEmptyCart(cartDto);
+        ResponseEntity<OrderDto> createCart = cartController.createEmptyCart(cartDto);
 
         //Then
         assertEquals(200, createCart.getStatusCode().value());

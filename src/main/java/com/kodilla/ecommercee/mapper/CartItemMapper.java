@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -34,6 +35,14 @@ public class CartItemMapper {
 
 
     public Set<CartItemDto> mapToCartItemDtoSet (Set<CartItem> cartItems) {
+        Set<CartItemDto> cartItemDtoSet = new HashSet<>();
+        for (CartItem cartItem: cartItems) {
+            cartItemDtoSet.add(mapToCartItemDto(cartItem));
+        }
+        return cartItemDtoSet;
+    }
+
+    public Set<CartItemDto> mapToCartItemDtoList (List<CartItem> cartItems) {
         Set<CartItemDto> cartItemDtoSet = new HashSet<>();
         for (CartItem cartItem: cartItems) {
             cartItemDtoSet.add(mapToCartItemDto(cartItem));

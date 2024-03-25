@@ -31,4 +31,8 @@ public class UserDbService {
         }
         throw new UserWithGivenUserNameExist();
     }
+
+    public long getUserId(String username) {
+        return userRepository.findByUsername(username).getUserId();
+    }
 }

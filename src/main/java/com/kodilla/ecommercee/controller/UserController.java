@@ -76,4 +76,9 @@ public class UserController {
         activityDbService.saveActivity(new Activity(user,"Logged in."));
         return ResponseEntity.ok(generateUserKey);
     }
+
+    @GetMapping(value = "/userId")
+    public Long getUserId(@RequestParam String username) {
+        return userDbService.getUserId(username);
+    }
 }

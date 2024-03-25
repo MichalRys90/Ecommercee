@@ -3,9 +3,11 @@ package com.kodilla.ecommercee.service;
 import com.kodilla.ecommercee.domain.CartItem;
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.domain.dto.CartItemDto;
 import com.kodilla.ecommercee.exception.CartItemDousntExist;
 import com.kodilla.ecommercee.exception.CartNotFoundException;
 import com.kodilla.ecommercee.exception.ProductNotFoundException;
+import com.kodilla.ecommercee.mapper.CartItemMapper;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.repository.CartItemRepository;
 import com.kodilla.ecommercee.repository.CartRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -24,10 +27,16 @@ public class CartItemDbService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final CartMapper cartMapper;
+    private final CartItemMapper cartItemMapper;
 
     public List<CartItem> getProductsList(Long cartId) throws Exception {
         Order cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
-        return cartMapper.mapToAllProducts(cartItemRepository.findAllByOrder(cart));
+                return cartMapper.mapToAllProducts(cartItemRepository.findAllByOrder(cart));
+    }
+
+    public Set<CartItemDto> cartItemList(Long cartId) throws Exception {
+        Order cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+        return cartItemMapper.mapToCartItemDtoList(cartItemRepository.findAllByOrder(cart));
     }
 
     public CartItem addProduct(Long cartId, Long productId) throws Exception {

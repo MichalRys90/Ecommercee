@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.*;
 import com.kodilla.ecommercee.domain.dto.CartDto;
+import com.kodilla.ecommercee.domain.dto.CartItemDto;
 import com.kodilla.ecommercee.domain.dto.OrderDto;
 import com.kodilla.ecommercee.domain.dto.ProductDto;
 import com.kodilla.ecommercee.exception.UserNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/v1/carts")
@@ -39,12 +41,12 @@ public class CartController {
     private OrderMapper orderMapper;
 
     @PostMapping(value = "/emptyCart", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CartDto> createEmptyCart(@RequestBody CartDto cartDto) throws UserNotFoundException {
+    public ResponseEntity<OrderDto> createEmptyCart(@RequestBody CartDto cartDto) throws UserNotFoundException {
         activityDbService.saveActivity(new Activity(userDbService.getUser(cartDto.getUserId()),
                 "Request create empty cart"));
         Order cart = cartMapper.mapToCart(cartDto);
         cartDbService.saveCart(cart);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(orderMapper.mapToOrderDto(cart));
     }
 
     @GetMapping(value = "/getCart/{cardId}")
@@ -53,6 +55,14 @@ public class CartController {
                 "Request get cart with id: " + cardId));
         List<CartItem> products = cartItemDbService.getProductsList(cardId);
         return ResponseEntity.ok(productMapper.mapToProductDtoList(cartMapper.mapToProductList(products)));
+    }
+
+    @GetMapping(value = "cartItem/getCart/{cardId}")
+    public ResponseEntity<Set<CartItemDto>> getCartItem(@PathVariable Long cardId) throws Exception {
+        activityDbService.saveActivity(new Activity(orderDbService.getOrder(cardId).getUser(),
+                "Request get cart with id: " + cardId));
+        Set<CartItemDto> products = cartItemDbService.cartItemList(cardId);
+        return ResponseEntity.ok(products);
     }
 
     @PutMapping(value = "/addProducts/{cartId}/{productId}")

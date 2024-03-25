@@ -22,7 +22,7 @@ public class CartMapper {
     @Autowired
     private UserRepository userRepository;
     public Order mapToCart(final CartDto cartDto) throws UserNotFoundException {
-        return new Order(cartDto.getId(),
+        return new Order(
                 userRepository.findById(cartDto.getUserId()).orElseThrow(UserNotFoundException::new),
                 LocalDateTime.now(),
                 CartStatus.CART,
